@@ -32,6 +32,14 @@ def end_game():
     exit()
 
 
+def ace_value(ace, hand):
+    if hand <= 21:
+        return ace
+    else:
+        ace = 1
+        return ace
+
+
 def play():
     player = []
     comp = []
@@ -49,18 +57,28 @@ def play():
     print(f"Computer's first card: {comp[0]} | value: {card_value(comp[0])}")
 
     while player_score < 21:
+
         hit = input("Type 'y' to get another card or type 'n' to pass: ").lower()       # add another card
         if hit == "y":
             player.append(draw_a_card())
+            print(player[-1])                       # testing (to del)
             player_score += card_value(player[-1])
             if player_score > 21:
-                # TODO: check if ace is in comp's hand, convert to 1-value and back to loop
-                print(f"Your final hand: {player} | final score: {player_score}")   # player went over
-                print(f"Computer's final hand: {comp} | final score: {comp_score}")
-                print("You went over and you lose.")
-                play_again()
-
-            elif player_score == 21:
+                # TODO: check if ace is in player's hand, convert to 1-value and back to loop
+                for card in range(len(player)):
+                    if player[card] == "A":
+                        player[card] = 1
+                        player_score -= 10
+                        print(f"Your cards: {player} | current score: {player_score}")
+                if player_score > 21:
+                    print(f"Your final hand: {player} | final score: {player_score}")   # player went over
+                    print(f"Computer's final hand: {comp} | final score: {comp_score}")
+                    print("You went over and you lose.")
+                    play_again()
+                else:
+                    # print(f"Your cards: {player} | current score: {player_score}")
+                    pass
+            if player_score == 21:
                 # print(f"Your cards: {player} | final score: {player_score}")
                 while comp_score < 17:                                            # computer's hit
                     comp.append(draw_a_card())
@@ -70,11 +88,13 @@ def play():
                         print(f"Your final hand: {player} | final score: {player_score}")
                         print(f"Computer's final hand: {comp} | final score: {comp_score}")  # computer went over
                         print("You win!")
+                        play_again()
                     elif comp_score > 21:
                         # TODO: check if ace is in comp's hand, convert to 1-value and back to loop
                         print(f"Your final hand: {player} | final score: {player_score}")
                         print(f"Computer's final hand: {comp} | final score: {comp_score}")     # computer went over
                         print("Opponent went over, you win!")
+                        play_again()
                 if comp_score == 21:
                     player_cards = len(player)
                     comp_cards = len(comp)
@@ -86,7 +106,8 @@ def play():
                         print("You lose.")
                     play_again()
             else:                                                               # player's score < 21
-                print(f"Your cards: {player} | current score: {player_score}")
+                # print(f"Your cards: {player} | current score: {player_score}")
+                pass
         else:
             while comp_score < player_score:                                      # computer's hit
                 if comp_score <= 16:
@@ -100,8 +121,10 @@ def play():
                 print(f"Computer's final hand: {comp} | final score: {comp_score}")
                 if player_score > comp_score:                                       # check who win
                     print("You win!")
+                    play_again()
                 elif player_score < comp_score:
                     print("You lose!")
+                    play_again()
                 else:
                     player_cards = len(player)                                      # cards counting
                     comp_cards = len(comp)
