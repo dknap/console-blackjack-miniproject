@@ -37,33 +37,74 @@ def play():
             player.append(draw_a_card())
             player_score += card_value(player[-1])
             if player_score > 21:
-                # TODO: check if ace in hand and convert to 1-value
+                # TODO: check if ace is in comp's hand, convert to 1-value and back to loop
                 print(f"Your final hand: {player} | final score: {player_score}")   # player went over
                 print(f"Computer's final hand: {comp} | final score: {comp_score}")
                 print("You went over and you lose.")
                 # TODO: go to play_again function
 
             elif player_score == 21:
-                print(f"Your cards: {player} | final score: {player_score}")
-                while (comp_score < 21):                                            # computer's hit
-                    # TODO: Check computer
+                # print(f"Your cards: {player} | final score: {player_score}")
+                while (comp_score < 17):                                            # computer's hit
                     comp.append(draw_a_card())
                     comp_score += card_value(comp[-1])
-                    if comp_score > 21:
-                        # TODO: check if ace in comp's hand and convert to 1-value
+                    if comp_score > 16 and comp_score < 21:
+                        # TODO: check if ace is in comp's hand, convert to 1-value and back to loop
+                        print(f"Your final hand: {player} | final score: {player_score}")
+                        print(f"Computer's final hand: {comp} | final score: {comp_score}")  # computer went over
+                        print("You win!")
+                    elif comp_score > 21:
+                        # TODO: check if ace is in comp's hand, convert to 1-value and back to loop
                         print(f"Your final hand: {player} | final score: {player_score}")
                         print(f"Computer's final hand: {comp} | final score: {comp_score}")     # computer went over
                         print("Opponent went over, you win!")
-
                 if comp_score == 21:
-                    # TODO: print draw and go to play_again function
-                    pass
-
-            else:                                                               # player's score < 21 => ask for hit
+                    player_cards = len(player)
+                    comp_cards = len(comp)
+                    if player_cards < comp_cards:
+                        print("You win!")
+                    elif player_cards == comp_cards:
+                        print("Draw.")
+                    else:
+                        print("You lose.")
+                    # TODO: go to play_again function
+            else:                                                               # player's score < 21
                 print(f"Your cards: {player} | current score: {player_score}")
         else:
-            # TODO: Stand
-            print(f"Your cards: {player} | current score: {player_score}")
-
+            while (comp_score < player_score):                                      # computer's hit
+                if comp_score <= 16:
+                    comp.append(draw_a_card())
+                    comp_score += card_value(comp[-1])
+                else:
+                    break
+            if comp_score > 16 and comp_score <= 21:
+                # TODO: check if ace is in comp's hand, convert to 1-value and back to loop
+                print(f"Your final hand: {player} | final score: {player_score}")
+                print(f"Computer's final hand: {comp} | final score: {comp_score}")
+                if player_score > comp_score:                                       # check who win
+                    print("You win!")
+                elif player_score < comp_score:
+                    print("You lose!")
+                else:
+                    player_cards = len(player)                                      # cards counting
+                    comp_cards = len(comp)
+                    if player_cards < comp_cards:
+                        print("You win!")
+                    elif player_cards == comp_cards:
+                        print("Draw.")
+                    else:
+                        print("You lose.")
+            elif comp_score > 21:
+                # TODO: check if ace is in comp's hand, convert to 1-value and back to loop
+                print(f"Your final hand: {player} | final score: {player_score}")
+                print(f"Computer's final hand: {comp} | final score: {comp_score}")  # computer went over
+                print("Opponent went over, you win!")
+            if comp_score > player_score:
+                print(f"Your final hand: {player} | final score: {player_score}")
+                print(f"Computer's final hand: {comp} | final score: {comp_score}")  # computer > player
+                print("You lose.")
+                # TODO: go to play_again function
+            # print(f"Your cards: {player} | current score: {player_score}")
+    # TODO: player's BlackJack (hand)
 
 play()
