@@ -2,9 +2,7 @@ import random
 import art
 
 print(art.logo)
-
-
-# TODO: improve UX: show the drawn card and add "===" line before each "final hand"
+# TODO: improve UX: show the drawn card
 
 
 def draw_a_card():
@@ -65,6 +63,8 @@ def play():
             print("But unfortunately dealer has the same... Draw!")
         else:
             print("You win!")
+            art.line()
+            play_again()
     else:
         while player_score < 21:
 
@@ -82,9 +82,11 @@ def play():
                             player_score -= 10
                             print(f"Your cards: {player} | current score: {player_score}")
                     if player_score > 21:
+                        art.line()
                         print(f"Your final hand: {player} | final score: {player_score}")  # player went over
                         print(f"Computer's final hand: {comp} | final score: {comp_score}")
                         print("You went over and you lose.")
+                        art.line()
                         play_again()
                     else:
                         # print(f"Your cards: {player} | current score: {player_score}")
@@ -95,12 +97,13 @@ def play():
                         comp.append(draw_a_card())
                         comp_score += card_value(comp[-1])
                         if 16 < comp_score < 21:
+                            art.line()
                             print(f"Your final hand: {player} | final score: {player_score}")
                             print(f"Computer's final hand: {comp} | final score: {comp_score}")  # computer went over
                             print("You win!")
+                            art.line()
                             play_again()
                         elif comp_score > 21:
-                            # TODO: check if ace is in comp's hand, convert to 1-value and back to loop
                             have_ace = False
                             for card in range(len(comp)):
                                 if comp[card] == "A":
@@ -109,10 +112,12 @@ def play():
                                     comp_score -= 10
                                     print(f"Your cards: {player} | current score: {player_score}")
                             if have_ace == False:
+                                art.line()
                                 print(f"Your final hand: {player} | final score: {player_score}")
                                 print(
                                     f"Computer's final hand: {comp} | final score: {comp_score}")  # computer went over
                                 print("Opponent went over, you win!")
+                                art.line()
                                 play_again()
                     if comp_score == 21:
                         player_cards = len(player)
@@ -123,19 +128,24 @@ def play():
                             print("Draw.")
                         else:
                             print("You lose.")
+                        art.line()
                         play_again()
                     if 16 < comp_score < 21:
+                        art.line()
                         print(f"Your final hand: {player} | final score: {player_score}")
                         print(f"Computer's final hand: {comp} | final score: {comp_score}")  # computer went over
                         print("You win!")
+                        art.line()
                         play_again()
                 else:  # player's score < 21
                     pass
             else:  # IF HIT == NO
                 if comp_score > player_score:
+                    art.line()
                     print(f"Your final hand: {player} | final score: {player_score}")
                     print(f"Computer's final hand: {comp} | final score: {comp_score}")  # computer > player
                     print("You lose.")
+                    art.line()
                     play_again()
                 elif comp_score > 16 and comp_score == player_score:
                     print("Draw.")
@@ -151,12 +161,15 @@ def play():
                                     comp[card] = 1
                                     comp_score -= 10
                     else:
+                        art.line()
                         print(f"Your final hand: {player} | final score: {player_score}")
                         print(f"Computer's final hand: {comp} | final score: {comp_score}")
                         print("You win!")
+                        art.line()
                         break
 
                 if 16 < comp_score <= 21:
+                    art.line()
                     print(f"Your final hand: {player} | final score: {player_score}")
                     print(f"Computer's final hand: {comp} | final score: {comp_score}")
                     if player_score > comp_score:  # check who win
@@ -174,6 +187,7 @@ def play():
                             print("Draw.")
                         else:
                             print("You lose.")
+                    art.line()
                     play_again()
                 elif comp_score > 21:
                     have_ace = False
@@ -183,9 +197,11 @@ def play():
                             comp[card] = 1
                             comp_score -= 10
                     if not have_ace:
+                        art.line()
                         print(f"Your final hand: {player} | final score: {player_score}")
                         print(f"Computer's final hand: {comp} | final score: {comp_score}")  # computer went over
                         print("Opponent went over, you win!")
+                        art.line()
                         play_again()
                 # print(f"Your cards: {player} | current score: {player_score}")
 
